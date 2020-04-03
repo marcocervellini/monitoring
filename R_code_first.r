@@ -1,4 +1,4 @@
-# first lesson 2020_03_25 -  Moniotring Ecosystem
+# 1st lesson 2020_03_25 -  Moniotring Ecosystem
 #Intro to R
 
 #we need "quotes" because we use a character element
@@ -32,7 +32,8 @@ plot(zinc,copper, col="green",pch=19)
 # cex a charcter exageration e.g. cex=2 is the double, e.g. cex=0.5 is the half
 plot(zinc,copper, col="green",pch=19,cex=2)
 
-### lesson 2020_03_27 - Moniotring Ecosystem, Multipanell in R: 
+#####################################################################################
+### 2nd lesson 2020_03_27 - Moniotring Ecosystem, Multipanell in R: 
 
 #The R package 'ggplot2' is a plotting system based on the grammar of graphics. 
 #'GGally' extends 'ggplot2' by adding several functions to reduce the complexity
@@ -83,6 +84,7 @@ ggpairs(meuse[,3:6])
 # We have on the diagonal the distribution frequency, on the x axe we have the values, on the Y axe we have the frequency
 # in thi example we have an higher frequency for low value
 
+#####################################################################################################################
 ### lesson 2020_04_01 - Moniotring Ecosystem, Spatial in R: 
 
 # R code for spatial view of points
@@ -132,8 +134,38 @@ plot(country, cases, las=3) #vertical labels
 
 plot(country, cases, las=3, cex.axis=0.5) #half of the previous size labels
 
-#to use ggplot2 you must have, data, variable and type of symbol you want to use
 
+# save the .RData under the menu File  - you should write also the name save.image(xxxx.RData)
+# In this way you can open a new script reloading all your data
+save.image()
+
+###########################################################################################################
+### 4th lesson 2020_04_03 - Moniotring Ecosystem, Spatial in R (second part): 
+
+setwd("C:/RStudio/lab_monit")
+# here you can load all your data previously saved with save.image()
+load(".Rdata")
+#list all your onjects
+ls()
+library(ggplot2)
+
+# loading the dataframe "mpg" contained in "ggplot2" package
+data(mpg)
+head(mpg)
+names(mpg)
+
+#key components of GGplot2 package: data, aes, geometry
+#geometry as point
+ggplot(mpg,aes(x=displ,y=hwy)) + geom_point
+#geometry as line
+ggplot(mpg,aes(x=displ,y=hwy)) + geom_line()
+#geometry as polygons
+ggplot(mpg,aes(x=displ,y=hwy)) + geom_polygon(
+
+#Let's apply GGplot2 to "covid" dataframe
+head(covid)  
+#with "size" you can emphasize the size if a certain variable depending on its range value, in this case the va "cases"
+ggplot(covid, aes(x=lon, y=lat, size=cases)) + geom_point()
 
 
 
