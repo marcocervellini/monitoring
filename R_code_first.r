@@ -5,11 +5,16 @@
 install.packages("sp")
 install.packages("GGally")
 install.packages("ggplot2")
+install.packages("spatstat")
+install.packages("rgdal")
+
 
 # we don't need "quotes" because sp is now an object inside R
 library(sp)
 library(GGally)
 library(ggplot2)
+library(spatstat)
+library(rgdal)
 
 library (sp) # require (sp) will also do the same job
 
@@ -166,6 +171,34 @@ ggplot(mpg,aes(x=displ,y=hwy)) + geom_polygon(
 head(covid)  
 #with "size" you can emphasize the size if a certain variable depending on its range value, in this case the va "cases"
 ggplot(covid, aes(x=lon, y=lat, size=cases)) + geom_point()
+
+#point pattern analysis
+#plotting with package "spatstat"
+covids <- ppp(lon, lat, c(-180,180), c(-90,90))
+d <- density(covids)
+plot(d)
+points(covids)
+  
+### 5th lesson 2020_04_03 - Moniotring Ecosystem, Spatial in R (coastline): 
+
+setwd("C:/RStudio/lab_monit")
+#Let's input vector lines (x0y0,x1y1,...)
+coastlines <-  readOGR("ne_10m_coastline.shp")
+coastlines
+plot(coastlines, add=T)
+
+#change the colours and make the graph beautiful
+cl <- colorRampPalette(c("yellow","orange","red")) (100)
+plot(d, col=cl)
+points(covids)
+plot(coastlines, add=T, col="yellow")
+
+# Exercise: plot della mappa di densità con una nuova colorazione, e aggiunta delle coastlines
+cl <- colorRampPalette(c("blue","light blue","light green","yellow")) (100)
+plot(d, col=cl)
+points(covids)
+plot(coastlines, add=T, col="orange")
+
 
 
 
