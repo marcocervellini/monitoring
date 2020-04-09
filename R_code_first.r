@@ -179,6 +179,7 @@ d <- density(covids)
 plot(d)
 points(covids)
   
+###########################################################################################################
 ### 5th lesson 2020_04_03 - Moniotring Ecosystem, Spatial in R (coastline): 
 
 setwd("C:/RStudio/lab_monit")
@@ -194,10 +195,19 @@ points(covids)
 plot(coastlines, add=T, col="yellow")
 
 # Exercise: plot della mappa di densità con una nuova colorazione, e aggiunta delle coastlines
-cl <- colorRampPalette(c("blue","light blue","light green","yellow")) (100)
-plot(d, col=cl)
+clr <- colorRampPalette(c("blue","light blue","light green","yellow")) (100)
+plot(d, col=clr)
 points(covids)
-plot(coastlines, add=T, col="orange")
+plot(d, col=clr, main="Densities of covid-19")
+plot(coastlines, add=T, col="black")
+  
+#export in PDF
+pdf("covid_density.pdf")
+clr <- colorRampPalette(c("light green", "yellow","orange","violet")) (100)
+plot(d, col=clr, main="Densities of covid-19")
+points(covids)
+plot(coastlines, add=T)
+dev.off()
 
 
 
