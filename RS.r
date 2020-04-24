@@ -73,4 +73,21 @@ plotRGB(p224r63_2011,r=3,g=2,b=4, stretch="Lin")
 save.image("R_code_rs.Rdata")
 rm(list = ls())
 
+###############################################################################################################################################################################
+#### 9th lesson 2020_04_24 - Monitoring Ecosystem, RS in R - comparing 1988Vs2011: 
+
+
+setwd("C:/RStudio/lab_monit")
+load("R_code_rs.Rdata")
+ls()
+p224r63_1988<-brick("p224r63_1988_masked.grd")
+plot(p224r63_1988)
+par(mfrow=c(2,1))
+# putting on the top the blue band in R of RGB
+plotRGB(p224r63_1988,r=3,g=2,b=1, stretch="Lin")
+plotRGB(p224r63_2011,r=3,g=2,b=1, stretch="Lin")
+
+# Put the NIR on the top of R from RGB (in this way we can associate the reflection of vegetation to the R band)
+plotRGB(p224r63_1988,r=4,g=3,b=2, stretch="Lin")
+plotRGB(p224r63_2011,r=4,g=3,b=2, stretch="Lin")
 
