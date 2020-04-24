@@ -76,7 +76,6 @@ rm(list = ls())
 ###############################################################################################################################################################################
 #### 9th lesson 2020_04_24 - Monitoring Ecosystem, RS in R - comparing 1988Vs2011: 
 
-
 setwd("C:/RStudio/lab_monit")
 load("R_code_rs.Rdata")
 ls()
@@ -87,7 +86,41 @@ par(mfrow=c(2,1))
 plotRGB(p224r63_1988,r=3,g=2,b=1, stretch="Lin")
 plotRGB(p224r63_2011,r=3,g=2,b=1, stretch="Lin")
 
-# Put the NIR on the top of R from RGB (in this way we can associate the reflection of vegetation to the R band)
+# False colours RGB 432 (in this way we can associate the reflection of vegetation to the R band)
 plotRGB(p224r63_1988,r=4,g=3,b=2, stretch="Lin")
 plotRGB(p224r63_2011,r=4,g=3,b=2, stretch="Lin")
+
+# Enhance the noise!
+plotRGB(p224r63_1988,r=4,g=3,b=2, stretch="hist")
+plotRGB(p224r63_2011,r=4,g=3,b=2, stretch="hist")
+
+#DVI for 2011
+
+dvi_2011<-p224r63_2011$B4_sre - p224r63_2011$B3_sre
+cl <- colorRampPalette(c("darkorchid3","light blue","lightpink4"))(100) 
+plot(dvi_2011, col=cl)
+
+#DVI for 1988
+
+dvi_1988<-p224r63_1988$B4_sre - p224r63_1988$B3_sre
+cl <- colorRampPalette(c("darkorchid3","light blue","lightpink4"))(100) 
+plot(dvi_1988, col=cl)
+
+#DVI difference
+
+DVI_diff<-dvi_2011 - dvi_1988
+plot(DVI_diff)
+
+#Changing the grain of our images
+#A factor of 10 means10 times bigger, so we are passing from 30m pxel to 300m pixel res
+
+p224r63_2011_res10<-aggregate(p224r63_2011, fact=10)
+p224r63_2011_res100<-aggregate(p224r63_2011, fact=100)
+
+# compare the same image at different resolution - white pixel are no more visible
+par(mfrow=c(3,1))
+plotRGB(p224r63_2011,r=4,g=3,b=2, stretch="Lin")
+plotRGB(p224r63_2011_res10,r=4,g=3,b=2, stretch="Lin")
+plotRGB(p224r63_2011_res100,r=4,g=3,b=2, stretch="Lin")
+
 
