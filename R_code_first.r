@@ -404,7 +404,12 @@ hist(difdvi)
 
   
 ###############################################################################################################################################################################
-#### 11th lesson 2020_05_06 - Raster PCA in R : 
+#### 11th lesson 2020_05_06 - Raster PCA in R :
+
+library(vegan)
+library(RStoolbox)
+library(raster)
+library(ggplot2)
 
 
 setwd("C:/RStudio/lab_monit")
@@ -475,11 +480,14 @@ plot(difpca)
 cldif <- colorRampPalette(c('blue','black','yellow'))(100)
 
 plot(difpca$PC1,col=cldif)
-  
+
 ###############################################################################################################################################################################
 #### 12th lesson 2020_05_08 - faPAR in R : 
 
-  
+library(raster)
+library(rasterVis)
+library(rasterdiv)
+
 plot(copNDVI)
 
 copNDVI <- reclassify(copNDVI, cbind(253:255, NA))
@@ -494,11 +502,14 @@ dev.off()
 
 pdf("faPAR.pdf")
 levelplot(faPAR10)
+
 save.image("faPAR.RData")
 dev.off()
-  
+
 ###############################################################################################################################################################################
 #### 13th lesson 2020_05_13 - Toybits in R : 
+
+library(raster)
 
 toy <- raster(ncol=2, nrow=2, xmn=1, xmx=2, ymn=1, ymx=2)
 toy
@@ -544,7 +555,7 @@ text(toy8bits, digits=2)
 
 dev.off()
 
-###return on faPAR data
+
 library(rasterdiv)
 
 rm(list = ls())
@@ -554,7 +565,5 @@ plot(copNDVI)
 load("faPAR.RData")
 
 writeRaster(copNDVI, "copNDVI.tif")
-
-  
 
 
