@@ -492,6 +492,8 @@ plot(copNDVI)
 
 copNDVI <- reclassify(copNDVI, cbind(253:255, NA))
 levelplot(copNDVI)
+  
+setwd("C:/RStudio/lab_monit")
 
 faPAR10 <- raster("faPAR10.tif")
 levelplot(faPAR10)
