@@ -475,6 +475,85 @@ plot(difpca)
 cldif <- colorRampPalette(c('blue','black','yellow'))(100)
 
 plot(difpca$PC1,col=cldif)
+  
+###############################################################################################################################################################################
+#### 12th lesson 2020_05_08 - faPAR in R : 
+
+  
+plot(copNDVI)
+
+copNDVI <- reclassify(copNDVI, cbind(253:255, NA))
+levelplot(copNDVI)
+
+faPAR10 <- raster("faPAR10.tif")
+levelplot(faPAR10)
+
+pdf("copNDVI.pdf")
+levelplot(copNDVI)
+dev.off()
+
+pdf("faPAR.pdf")
+levelplot(faPAR10)
+save.image("faPAR.RData")
+dev.off()
+  
+###############################################################################################################################################################################
+#### 13th lesson 2020_05_13 - Toybits in R : 
+
+toy <- raster(ncol=2, nrow=2, xmn=1, xmx=2, ymn=1, ymx=2)
+toy
+values(toy) <- c(1.13,1.44,1.55,3.4)
+
+plot(toy)
+text(toy, digits=2)
+
+toy2bits <- stretch(toy,minv=0,maxv=3)
+
+storage.mode(toy2bits[]) = "integer" #to make shure the images are stored as integer values
+
+plot(toy2bits)
+text(toy2bits, digits=2)
+
+toy4bits <- stretch(toy,minv=0,maxv=15)
+storage.mode(toy4bits[]) = "integer"
+
+plot(toy4bits)
+text(toy4bits, digits=2)
+
+toy8bits <- stretch(toy,minv=0,maxv=255)
+storage.mode(toy8bits[]) = "integer"
+
+plot(toy8bits)
+text(toy8bits, digits=2)
+
+#plot alltogether
+
+par(mfrow=c(1,4))
+
+plot(toy)
+text(toy, digits=2)
+
+plot(toy2bits)
+text(toy2bits, digits=2)
+
+plot(toy4bits)
+text(toy4bits, digits=2)
+
+plot(toy8bits)
+text(toy8bits, digits=2)
+
+dev.off()
+
+###return on faPAR data
+library(rasterdiv)
+
+rm(list = ls())
+
+plot(copNDVI)
+
+load("faPAR.RData")
+
+writeRaster(copNDVI, "copNDVI.tif")
 
   
 
