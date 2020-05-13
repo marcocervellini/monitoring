@@ -402,4 +402,80 @@ plot(difdvi, col=cld)
 hist(difdvi)
 # a lot of values over "0" so a great amount of lost vegetation and biomass
 
+  
+###############################################################################################################################################################################
+#### 11th lesson 2020_05_06 - Raster PCA in R : 
+
+
+setwd("C:/RStudio/lab_monit")
+p224r63_2011 <- brick("p224r63_2011_masked.grd")
+plot(p224r63_2011)
+
+#b1: blue
+#b2: green
+#b3: red
+#b4: NIR
+#b5: SWIR
+#b6: thermal infrared
+#b7: SWIR
+#b8: panchromatic
+
+plotRGB(p224r63_2011, r=5, g=4, b=3, stretch="Lin")
+ggRGB(p224r63_2011,5,4,3)
+
+p224r63_1988 <- brick("p224r63_1988_masked.grd")
+plotRGB(p224r63_1988, r=5, g=4, b=3, stretch="Lin")
+
+par(mfrow=c(1,2))
+plotRGB(p224r63_1988, r=5, g=4, b=3, stretch="Lin")
+plotRGB(p224r63_2011, r=5, g=4, b=3, stretch="Lin")
+
+names(p224r63_2011)
+plot(p224r63_2011$B1_sre, p224r63_2011$B3_sre)
+
+dev.off()
+
+# decrease the resolution
+#2011
+
+p224r63_2011_res <- aggregate(p224r63_2011, fact=10)
+
+p224r63_2011_pca <- rasterPCA(p224r63_2011_res)
+
+
+plot(p224r63_2011_pca$map)
+
+
+cl <- colorRampPalette(c('dark grey','grey','light grey'))(100)
+
+plot(p224r63_2011_pca$map,col=cl)
+
+summary(p224r63_2011_pca$model)
+
+pairs(p224r63_2011)
+
+plotRGB(p224r63_2011_pca$map, r=1, g=2, b=3, stretch="Lin")
+
+# 1988
+
+p224r63_1988_res <- aggregate(p224r63_1988, fact=10)
+p224r63_1988_pca <- rasterPCA(p224r63_1988_res) 
+plot(p224r63_1988_pca$map, col=cl)
+
+summary(p224r63_1988_pca$model)
+
+pairs(p224r63_1988)
+
+# difference
+
+difpca <- p224r63_2011_pca$map - p224r63_1988_pca$map
+
+plot(difpca)
+
+cldif <- colorRampPalette(c('blue','black','yellow'))(100)
+
+plot(difpca$PC1,col=cldif)
+
+  
+
 
