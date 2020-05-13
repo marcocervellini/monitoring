@@ -212,8 +212,6 @@ dev.off()
 ##########################################################################################################################
 #### 6th lesson 2020_04_15 - Monitoring Ecosystem, Dispersal_Multivariare in R (to be compiled see folder 4 in Rstudio document):
 
-##########################################################################################################################
-#### 7th lesson 2020_04_17 - Monitoring Ecosystem, Remote sensing in R ):
 
 
 
