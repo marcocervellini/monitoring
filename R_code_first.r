@@ -9,6 +9,8 @@ install.packages("raster")
 install.packages("RStoolbox")
 install.packages("rasterdiv")
 install.packages("rasterVis")
+install.packages("sf")
+
 
 # if install.packages don't work for ggplot2 you can install the devtools package
 
@@ -25,6 +27,7 @@ library(raster)
 library(RStoolbox)
 library(rasterdiv)
 library(rasterVis)
+library(sf)
 
 library (sp) # require (sp) will also do the same job
 
@@ -567,5 +570,61 @@ plot(copNDVI)
 load("faPAR.RData")
 
 writeRaster(copNDVI, "copNDVI.tif")
+  
+###############################################################################################################################################################################
+#### 14th lesson 2020_05_15 -  : No lesson
+
+###############################################################################################################################################################################
+#### 15th lesson 2020_05_20 - PAR and DVI - linear regression in R : 
+
+library(raster)
+library(rasterdiv)
+library(sf)
+
+# example of linear regression
+erosion <- c(12, 14, 16, 24, 26, 40, 55, 67)
+hm <- c(30, 100, 150, 200, 260, 340, 460, 600)
+plot(erosion, hm, col="red", pch=19,cex=2, xlab="erosion", ylab="heavy metals")
+model1 <- lm(hm  ~ erosion)
+summary(model1)
+abline(model1)
+
+setwd("C:/RStudio/lab_monit")
+faPAR10 <- raster("faPAR10.tif")
+plot(faPAR10)
+
+# removing water data
+copNDVI <- reclassify(copNDVI, cbind(253:255, NA))
+#number of cell in the raster, you need just to write the name
+copNDVI
+plot(copNDVI)
+
+# to call st_* functions
+random.points <- function(x,n) # x=raster file and n= number of cells
+{
+  lin <- rasterToContour(is.na(x))
+  pol <- as(st_union(st_polygonize(st_as_sf(lin))), 'Spatial') # st_union to dissolve geometries
+  pts <- spsample(pol[1,], n, type = 'random')
+}
+
+pts <- random.points(faPAR10,1000)
+plot(pts)
+#perchè si vedono solo i 1000 punti random e non il raster sotto????
+
+#extracting the random points for the two raster
+copNDVIp <- extract(copNDVI,pts)
+faPAR10p <- extract(faPAR10,pts)
+
+# observe the values
+copNDVIp
+faPAR10p
+
+model2 <- lm(faPAR10p ~ copNDVIp)
+summary(model2)
+model2
+
+plot(copNDVIp,faPAR10p, col="green", xlab="biomass", ylab="photosynthesis")
+abline(model2, col="red")
+
 
 
