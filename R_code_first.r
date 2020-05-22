@@ -628,9 +628,10 @@ abline(model2, col="red")
   
   
 ###############################################################################################################################################################################
-#### 16th lesson 2020_05_22 - Standard deviation using raster in R (I don't have access to the file snt_r10) : 
+#### 16th lesson 2020_05_22 - Standard deviation using raster in R - moving windows (I don't have access to the file snt_r10) : 
     
-# install.packages("raster")
+install.packages("raster")
+install.packages("rstoolbox")
 library(raster)
 
 snt <- brick("snt_r10.tif")
@@ -638,6 +639,34 @@ plot(snt)
 plotRGB(snt,3,2,1, stretch="lin")
 #Infrared on the top of the red to observe better vegetation
 plotRGB(snt,4,3,2, stretch="lin")
+pairs(snt)
+sntpca <- rasterPCA(snt)
+sntpca
+summary(sntpca$model)
+#70% of variance explained bi the PCA1
+plot(sntpca$map)
+# a graphical output to observe the variety of the pixels
+plotRGB(sntpca$map, 1, 2, 3, stretch="lin")
+  
+#set the moving windows
+# the matrix is built with values "1" not to impact on the calculation
+window <- matrix(1, nrow = 5, ncol = 5)
+window
+#standard deviation in a map with the PCA1
+sd_snt <- focal(sntpca$map$PC1, w=window, fun=sd)
+cl <- colorRampPalette(c('dark blue','green','orange','red'))(100) # 
+plot(sd_snt, col=cl)
+
+par(mfrow=c(1,2))
+plotRGB(snt,4,3,2, stretch="lin", main="original image") 
+plot(sd_snt, col=cl, main="diversity")
+#Using the moving windows and funcrion="standard deviation"
+#we are going to highlight the differences between border 
+#(remember that the result of the moving windows is graphically
+#represented by the value of standard deviation in the focal cental pixel)
+
+ 
+
  
 
 
