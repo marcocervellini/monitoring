@@ -625,6 +625,24 @@ model2
 
 plot(copNDVIp,faPAR10p, col="green", xlab="biomass", ylab="photosynthesis")
 abline(model2, col="red")
+  
+  
+###############################################################################################################################################################################
+#### 16th lesson 2020_05_22 - Standard deviation using raster in R (I don't have access to the file snt_r10) : 
+    
+# install.packages("raster")
+library(raster)
+
+snt <- brick("snt_r10.tif")
+plot(snt)
+plotRGB(snt,3,2,1, stretch="lin")
+#Infrared on the top of the red to observe better vegetation
+plotRGB(snt,4,3,2, stretch="lin")
+ 
+
+
+ 
+
 
 
 
