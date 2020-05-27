@@ -633,6 +633,7 @@ abline(model2, col="red")
 install.packages("raster")
 install.packages("rstoolbox")
 library(raster)
+library(rstoolbox)
 
 snt <- brick("snt_r10.tif")
 plot(snt)
@@ -664,6 +665,22 @@ plot(sd_snt, col=cl, main="diversity")
 #we are going to highlight the differences between border 
 #(remember that the result of the moving windows is graphically
 #represented by the value of standard deviation in the focal cental pixel)
+  
+###############################################################################################################################################################################
+#### 17th lesson 2020_05_27 - Standard deviation using raster in R - moving windows (I don't have access to the file cladonia____) : 
+  
+library(raster)
+library(rstoolbox)
+
+clad <- brick("cladonia_stellaris_calaita.JPG")
+plotRGB(clad, 1,2,3, stretch="lin")
+cladpca <- rasterPCA(clad)
+cladpca
+summary(cladpca)
+plotRGB(cladpca$map, 1, 2, 3, stretch="lin")
+# "1" doesn't impact the calculation, but why????
+window <- matrix(1, nrow = 3, ncol = 3)
+window
 
  
 
