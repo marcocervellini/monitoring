@@ -681,7 +681,11 @@ plotRGB(cladpca$map, 1, 2, 3, stretch="lin")
 # "1" doesn't impact the calculation, but why????
 window <- matrix(1, nrow = 3, ncol = 3)
 window
-
+#To understand $map and $PC! see results running cladpca
+sd_clad <- focal(cladpca$map$PC1, w=window, fun=sd)
+# To accelerate we can aggregate and then run the movingwindow with the new aggregated file
+PC1_agg <- aggregate(cladpca$map$PC1, fact=10)
+sd_clad <- focal(PC1_agg, w=window, fun=sd)
  
 
  
