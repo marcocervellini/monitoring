@@ -686,6 +686,21 @@ sd_clad <- focal(cladpca$map$PC1, w=window, fun=sd)
 # To accelerate we can aggregate and then run the movingwindow with the new aggregated file
 PC1_agg <- aggregate(cladpca$map$PC1, fact=10)
 sd_clad <- focal(PC1_agg, w=window, fun=sd)
+par(mfrow=c(1,2))
+cl <- colorRampPalette(c('yellow','violet','black'))(100) #
+plot(sd_clad, col=cl)
+plot(sd_clad_agg, col=cl)
+  
+#Probably wrong
+  
+# plot the calculation
+par(mfrow=c(1,2))
+cl <- colorRampPalette(c('yellow','violet','black'))(100) #
+plot()
+plotRGB(clad, 1,2,3, stretch="lin")
+plot(sd_clad, col=cl)
+# plot(sd_clad_agg, col=cl)
+
  
 
  
